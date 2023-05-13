@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{41c0bbd0-8d40-4df8-b479-7985f43a83b4}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)readme.txt" />
+    <Text Include="$(MSBuildThisFileDirectory)library.properties" />
+    <Text Include="$(MSBuildThisFileDirectory)src\ESP32SessionManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSession.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSessionManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\ServerSession.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ServerSessionManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\ESP32SessionManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\ClientSession.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\ClientSessionManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\ServerSession.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ServerSessionManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\SessionManagerInterface.h" />
+  </ItemGroup>
+</Project>

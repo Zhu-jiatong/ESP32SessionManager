@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ESP32SessionManager", "ESP32SessionManager\ESP32SessionManager.vcxitems", "{41C0BBD0-8D40-4DF8-B479-7985F43A83B4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicExample", "BasicExample\BasicExample.vcxproj", "{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|ARM.Build.0 = Debug|ARM
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|ARM.Deploy.0 = Debug|ARM
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|ARM64.Build.0 = Debug|ARM64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|x64.ActiveCfg = Debug|x64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|x64.Build.0 = Debug|x64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|x64.Deploy.0 = Debug|x64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|x86.ActiveCfg = Debug|x86
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|x86.Build.0 = Debug|x86
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Debug|x86.Deploy.0 = Debug|x86
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|ARM.ActiveCfg = Release|ARM
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|ARM.Build.0 = Release|ARM
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|ARM.Deploy.0 = Release|ARM
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|ARM64.ActiveCfg = Release|ARM64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|ARM64.Build.0 = Release|ARM64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|ARM64.Deploy.0 = Release|ARM64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|x64.ActiveCfg = Release|x64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|x64.Build.0 = Release|x64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|x64.Deploy.0 = Release|x64
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|x86.ActiveCfg = Release|x86
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|x86.Build.0 = Release|x86
+		{0AF3CCF9-4D69-4CBB-82B9-9251DF8AFDF7}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3AB00896-0578-49DD-BF73-A8DBB48419F6}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ESP32SessionManager\ESP32SessionManager.vcxitems*{0af3ccf9-4d69-4cbb-82b9-9251df8afdf7}*SharedItemsImports = 4
+		ESP32SessionManager\ESP32SessionManager.vcxitems*{41c0bbd0-8d40-4df8-b479-7985f43a83b4}*SharedItemsImports = 9
+	EndGlobalSection
+EndGlobal
