@@ -18,16 +18,15 @@ class SessionManager
 {
 public:
 	SessionManager(
-		std::function<void(SessionType, KeyType)> fn_storeSession,
+		std::function<void(KeyType)> fn_storeSession,
 		std::function<void(KeyType)> fn_deleteSession,
 		std::function<void(KeyType)> fn_retrieveSession,
 		std::function<bool()> fn_authenticateSession
-	)
-		:
+	) :
 		m_fn_storeSession(fn_storeSession),
 		m_fn_deleteSession(fn_deleteSession),
 		m_fn_retrieveSession(fn_retrieveSession),
-		m_fn_authenticateSession(fn_authenticateSession) 
+		m_fn_authenticateSession(fn_authenticateSession)
 	{}
 
 	virtual void begin() = 0;
@@ -37,7 +36,7 @@ public:
 	virtual SessionType getSessionInformation(KeyType) = 0;
 
 protected:
-	std::function<void(SessionType, KeyType)> m_fn_storeSession;
+	std::function<void(KeyType)> m_fn_storeSession;
 	std::function<void(KeyType)> m_fn_deleteSession;
 	std::function<void(KeyType)> m_fn_retrieveSession;
 	std::function<bool()> m_fn_authenticateSession;

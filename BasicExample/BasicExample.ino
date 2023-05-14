@@ -8,7 +8,7 @@
 #include <iostream>
 #include <iomanip>
 
-void storeSession(ClientSession, uint8_t*);
+void storeSession(uint8_t* sessionId);
 void deleteSession(uint8_t* sessionId);
 void retrieveSession(uint8_t* sessionId);
 bool authentiacateSession();
@@ -31,7 +31,7 @@ void loop() {
 
 }
 
-void storeSession(ClientSession sessionData, uint8_t* sessionId)
+void storeSession(uint8_t* sessionId)
 {
 	std::cout << "Store Session: ";
 	for (size_t i = 0; i < 32; ++i)

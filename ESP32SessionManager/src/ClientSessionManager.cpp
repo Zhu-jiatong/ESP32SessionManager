@@ -5,16 +5,6 @@
 #include <mbedtls/sha256.h>
 #include <iostream>
 
-ClientSessionManager::ClientSessionManager(
-	std::function<void(ClientSession, uint8_t*)> fn_storeSession,
-	std::function<void(uint8_t*)> fn_deleteSession,
-	std::function<void(uint8_t*)> fn_retrieveSession,
-	std::function<bool()> fn_authenticateSession
-)
-	: SessionManager{ fn_storeSession, fn_deleteSession, fn_retrieveSession, fn_authenticateSession }
-{
-}
-
 void ClientSessionManager::begin()
 {
 }
@@ -27,7 +17,7 @@ void ClientSessionManager::createSession(uint32_t clientIpAddress)
 {
 	std::shared_ptr<uint8_t[32]> sessionId = generateId(clientIpAddress);
 	ClientSession sessionData("hello");
-	m_fn_storeSession(sessionData, sessionId.get());
+	m_fn_storeSession(sessionId.get());
 }
 
 void ClientSessionManager::terminateSession(uint8_t* sessionId)

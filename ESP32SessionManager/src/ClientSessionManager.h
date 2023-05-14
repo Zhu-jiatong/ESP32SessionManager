@@ -8,12 +8,7 @@ class ClientSessionManager :
 	public SessionManager<ClientSession, uint8_t*>
 {
 public:
-	ClientSessionManager(
-		std::function<void(ClientSession, uint8_t*)> fn_storeSession,
-		std::function<void(uint8_t*)> fn_deleteSession,
-		std::function<void(uint8_t*)> fn_retrieveSession,
-		std::function<bool()> fn_authenticateSession
-	);
+	using SessionManager::SessionManager;
 	void begin();
 	void updateSessions();
 	void createSession(uint32_t clientIpAddress);
