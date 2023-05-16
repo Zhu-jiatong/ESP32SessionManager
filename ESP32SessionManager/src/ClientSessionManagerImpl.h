@@ -1,4 +1,5 @@
-#include "ClientSessionManager.h"
+#pragma once
+#include "ClientSessionManagerImpl.h"
 #include <sstream>
 #include <cstring>
 #include <string>
@@ -6,32 +7,38 @@
 #include <iostream>
 #include <iomanip>
 
-void ClientSessionManager::begin()
+template<typename ClientSessionType>
+inline void ClientSessionManager<ClientSessionType>::begin()
 {
 }
 
-void ClientSessionManager::updateSessions()
+template<typename ClientSessionType>
+void ClientSessionManager<ClientSessionType>::updateSessions()
 {
 }
 
-void ClientSessionManager::createSession(session_type sessionData)
+template<typename ClientSessionType>
+void ClientSessionManager<ClientSessionType>::createSession(session_type sessionData)
 {
 	std::shared_ptr<uint8_t[32]> sessionId = generateId(sessionData.m_clientIP);
 	sessionData.m_sessionId = sessionId;
-	m_fn_storeSession(sessionData);
+	SessionManager<ClientSessionType>::m_fn_storeSession(sessionData);
 }
 
-void ClientSessionManager::terminateSession(key_type sessionId)
+template<typename ClientSessionType>
+void ClientSessionManager<ClientSessionType>::terminateSession(key_type sessionId)
 {
-	m_fn_deleteSession(sessionId);
+	SessionManager<ClientSessionType>::m_fn_deleteSession(sessionId);
 }
 
-ClientSession ClientSessionManager::getSessionInformation(key_type sessionId)
+template<typename ClientSessionType>
+ClientSessionType ClientSessionManager<ClientSessionType>::getSessionInformation(key_type sessionId)
 {
-	return m_fn_retrieveSession(sessionId);;
+	return SessionManager<ClientSessionType>::m_fn_retrieveSession(sessionId);;
 }
 
-std::string ClientSessionManager::sessionIdToString(key_type sessionId)
+template<typename ClientSessionType>
+std::string ClientSessionManager<ClientSessionType>::sessionIdToString(key_type sessionId)
 {
 	std::ostringstream ss;
 	for (size_t i = 0; i < 32; ++i)
@@ -39,7 +46,8 @@ std::string ClientSessionManager::sessionIdToString(key_type sessionId)
 	return ss.str();
 }
 
-std::shared_ptr<uint8_t[32]> ClientSessionManager::sessionIdToArray(std::string sessionIdString)
+template<typename ClientSessionType>
+std::shared_ptr<uint8_t[32]> ClientSessionManager<ClientSessionType>::sessionIdToArray(std::string sessionIdString)
 {
 	std::shared_ptr<uint8_t[32]> output(new uint8_t[32], std::default_delete<uint8_t[]>());
 	for (size_t i = 0; i < sessionIdString.length(); i += 2)
@@ -50,7 +58,8 @@ std::shared_ptr<uint8_t[32]> ClientSessionManager::sessionIdToArray(std::string 
 	return output;
 }
 
-std::shared_ptr<uint8_t[32]> ClientSessionManager::generateId(uint32_t clientIpAddress)
+template<typename ClientSessionType>
+std::shared_ptr<uint8_t[32]> ClientSessionManager<ClientSessionType>::generateId(uint32_t clientIpAddress)
 {
 	std::shared_ptr<uint8_t[32]> output(new uint8_t[32], std::default_delete<uint8_t[]>()); // TODO: remove `std::default_delete<uint8_t[]>()` after v3.0.0 (5.1)
 
@@ -65,4 +74,3 @@ std::shared_ptr<uint8_t[32]> ClientSessionManager::generateId(uint32_t clientIpA
 	mbedtls_sha256_ret(reinterpret_cast<const uint8_t*>(inputCstr), strlen(inputCstr), output.get(), 0);
 	return output;
 }
-

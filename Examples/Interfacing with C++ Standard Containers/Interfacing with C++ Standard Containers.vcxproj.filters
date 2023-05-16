@@ -20,10 +20,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasicExample.ino" />
+    <ClCompile Include="Interfacing with C++ Standard Containers.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.BasicExample.vsarduino.h">
+    <ClInclude Include="__vm\.Interfacing with C++ Standard Containers.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

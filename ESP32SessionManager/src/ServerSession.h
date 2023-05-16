@@ -1,7 +1,7 @@
 #pragma once
 #include "SessionManagerInterface.h"
 
-class ServerSession :
+struct ServerSession :
 	public Session<uint32_t>
 {
 };

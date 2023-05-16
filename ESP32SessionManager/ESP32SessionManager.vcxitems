@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSession.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSessionManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSessionManagerImpl.h" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\ServerSession.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ServerSessionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\ESP32SessionManager.cpp" />

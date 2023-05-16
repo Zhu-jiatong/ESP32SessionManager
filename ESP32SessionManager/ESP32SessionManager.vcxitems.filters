@@ -17,7 +17,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSession.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSessionManager.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\ClientSessionManagerImpl.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)src\ServerSession.cpp">

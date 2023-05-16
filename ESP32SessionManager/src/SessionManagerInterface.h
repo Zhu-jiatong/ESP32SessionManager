@@ -4,7 +4,7 @@
 #include <functional>
 
 template<typename KeyType>
-class Session
+struct Session
 {
 public:
 	using key_type = KeyType;
