@@ -1,43 +1,51 @@
 #pragma once
 
-#include <map>
 #include <chrono>
 #include <functional>
-
-class Session
-{
-public:
-	Session(const char* userId)
-		:m_userId(userId), m_lastActiveTimestamp(std::chrono::high_resolution_clock::now()) {};
-	const char* m_userId = nullptr;
-	std::chrono::time_point<std::chrono::high_resolution_clock> m_lastActiveTimestamp;
-};
 
 template<typename SessionType, typename KeyType>
 class SessionManager
 {
 public:
+	using session_type = SessionType;
+	using key_type = KeyType;
+
 	SessionManager(
-		std::function<void(KeyType)> fn_storeSession,
-		std::function<void(KeyType)> fn_deleteSession,
-		std::function<void(KeyType)> fn_retrieveSession,
-		std::function<bool()> fn_authenticateSession
+		std::function<void(session_type)> fn_storeSession,
+		std::function<void(key_type)> fn_deleteSession,
+		std::function<session_type(key_type)> fn_retrieveSession
 	) :
 		m_fn_storeSession(fn_storeSession),
 		m_fn_deleteSession(fn_deleteSession),
-		m_fn_retrieveSession(fn_retrieveSession),
-		m_fn_authenticateSession(fn_authenticateSession)
+		m_fn_retrieveSession(fn_retrieveSession)
 	{}
 
 	virtual void begin() = 0;
-	virtual void createSession(uint32_t) = 0;
-	virtual void terminateSession(KeyType) = 0;
+	virtual void createSession(session_type) = 0;
+	virtual void terminateSession(key_type) = 0;
 	virtual void updateSessions() = 0;
-	virtual SessionType getSessionInformation(KeyType) = 0;
+	virtual session_type getSessionInformation(key_type) = 0;
+
+	class Session;
 
 protected:
-	std::function<void(KeyType)> m_fn_storeSession;
-	std::function<void(KeyType)> m_fn_deleteSession;
-	std::function<void(KeyType)> m_fn_retrieveSession;
-	std::function<bool()> m_fn_authenticateSession;
+	std::function<void(session_type)> m_fn_storeSession;
+	std::function<void(key_type)> m_fn_deleteSession;
+	std::function<session_type(key_type)> m_fn_retrieveSession;
+};
+
+template<typename SessionType, typename KeyType>
+class SessionManager<SessionType, KeyType>::Session
+{
+public:
+	using key_type = KeyType;
+
+	Session(const char* userId, uint32_t clientIP) :
+		m_userId(userId),
+		m_clientIP(clientIP),
+		m_lastActiveTimestamp(std::chrono::high_resolution_clock::now()) {};
+
+	const char* m_userId;
+	uint32_t m_clientIP;
+	std::chrono::time_point<std::chrono::high_resolution_clock> m_lastActiveTimestamp;
 };

@@ -4,6 +4,7 @@
 #include <string>
 #include <mbedtls/sha256.h>
 #include <iostream>
+#include <iomanip>
 
 void ClientSessionManager::begin()
 {
@@ -13,27 +14,45 @@ void ClientSessionManager::updateSessions()
 {
 }
 
-void ClientSessionManager::createSession(uint32_t clientIpAddress)
+void ClientSessionManager::createSession(ClientSession sessionData)
 {
-	std::shared_ptr<uint8_t[32]> sessionId = generateId(clientIpAddress);
-	ClientSession sessionData("hello");
-	m_fn_storeSession(sessionId.get());
+	std::shared_ptr<uint8_t[32]> sessionId = generateId(sessionData.m_clientIP);
+	sessionData.m_sessionId = sessionId;
+	m_fn_storeSession(sessionData);
 }
 
-void ClientSessionManager::terminateSession(uint8_t* sessionId)
+void ClientSessionManager::terminateSession(ClientSession::key_type sessionId)
 {
 	m_fn_deleteSession(sessionId);
 }
 
-ClientSession ClientSessionManager::getSessionInformation(uint8_t* sessionId)
+ClientSession ClientSessionManager::getSessionInformation(ClientSession::key_type sessionId)
 {
-	m_fn_retrieveSession;
-	return ClientSession("Random");
+	return m_fn_retrieveSession(sessionId);;
+}
+
+std::string ClientSessionManager::sessionIdToString(key_type sessionId)
+{
+	std::ostringstream ss;
+	for (size_t i = 0; i < 32; ++i)
+		ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(sessionId[i]);
+	return ss.str();
+}
+
+std::shared_ptr<uint8_t[32]> ClientSessionManager::sessionIdToArray(std::string sessionIdString)
+{
+	std::shared_ptr<uint8_t[32]> output(new uint8_t[32], std::default_delete<uint8_t[]>());
+	for (size_t i = 0; i < sessionIdString.length(); i += 2)
+	{
+		std::string byteString = sessionIdString.substr(i, 2);
+		output[i / 2] = std::stoi(byteString, nullptr, 16);
+	}
+	return output;
 }
 
 std::shared_ptr<uint8_t[32]> ClientSessionManager::generateId(uint32_t clientIpAddress)
 {
-	std::shared_ptr<uint8_t[32]> output(new uint8_t[32], std::default_delete<uint8_t[]>());
+	std::shared_ptr<uint8_t[32]> output(new uint8_t[32], std::default_delete<uint8_t[]>()); // TODO: remove `std::default_delete<uint8_t[]>()` after v3.0.0 (5.1)
 
 	auto timestamp = std::chrono::high_resolution_clock::now();
 	auto period = std::chrono::duration_cast<std::chrono::nanoseconds>(timestamp - initialTimestamp).count();
@@ -42,7 +61,8 @@ std::shared_ptr<uint8_t[32]> ClientSessionManager::generateId(uint32_t clientIpA
 	ss << period << clientIpAddress;
 	const std::string& inputStr = ss.str();
 	const char* inputCstr = inputStr.c_str();
-	std::cout << inputCstr << '\n';
+
 	mbedtls_sha256_ret(reinterpret_cast<const uint8_t*>(inputCstr), strlen(inputCstr), output.get(), 0);
 	return output;
 }
+

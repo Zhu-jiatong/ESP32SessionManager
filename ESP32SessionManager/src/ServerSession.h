@@ -2,7 +2,7 @@
 #include "SessionManagerInterface.h"
 
 class ServerSession :
-    private Session
+    public SessionManager<ServerSession, uint32_t>::Session
 {
 };
 

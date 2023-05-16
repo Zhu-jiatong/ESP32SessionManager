@@ -6,24 +6,33 @@
 
 #include "ClientSessionManager.h"
 #include <iostream>
-#include <iomanip>
+#include <unordered_map>
+#include <sstream>
 
-void storeSession(uint8_t* sessionId);
-void deleteSession(uint8_t* sessionId);
-void retrieveSession(uint8_t* sessionId);
-bool authentiacateSession();
+std::unordered_map<std::string, ClientSession> sessions;
 
-ClientSessionManager sessions(storeSession, deleteSession, retrieveSession, authentiacateSession);
+void storeSession(ClientSession sessionData);
+void deleteSession(ClientSessionManager::key_type sessionId);
+ClientSession retrieveSession(ClientSessionManager::key_type sessionId);
+
+ClientSessionManager sessionManager(storeSession, deleteSession, retrieveSession);
 
 // the setup function runs once when you press reset or power the board
 void setup() {
 	Serial.begin(115200);
 	std::cout << "Starting test\n";
 
-	sessions.begin();
-	sessions.createSession(123456);
+	sessionManager.begin();
 
-	std::cout << "end test\n";
+	ClientSession session1(12345, "Test User 1");
+	ClientSession session2(67890, "Test User 2");
+	ClientSession session3(13579, "Test User 3");
+
+	sessionManager.createSession(session1);
+	sessionManager.createSession(session2);
+	sessionManager.createSession(session3);
+
+	std::cout << "Setup complete, ready to accept user input\n";
 }
 
 // the loop function runs over and over again until power down or reset
@@ -31,29 +40,34 @@ void loop() {
 
 }
 
-void storeSession(uint8_t* sessionId)
+void serialEvent()
 {
-	std::cout << "Store Session: ";
-	for (size_t i = 0; i < 32; ++i)
-		printf("%02x", sessionId[i]);
-	std::cout << '\n';
-	std::cout << "Store Session: ";
-	for (size_t i = 0; i < 32; ++i)
-		std::cout << std::hex << std::setw(2) << std::setfill('0') << (int)sessionId[i];
-	std::cout << '\n';
+	std::string hashString;
+
+	while (Serial.available())
+		hashString += static_cast<char>(Serial.read());
+
+	auto querry = ClientSessionManager::sessionIdToArray(hashString);
+
+	std::string sessionId = ClientSessionManager::sessionIdToString(querry.get());
+	ClientSession session = sessionManager.getSessionInformation(querry.get());
+	std::cout << session.m_userId << '\n';
 }
 
-void deleteSession(uint8_t* sessionId)
+void storeSession(ClientSession sessionData)
 {
-	std::cout << "Delete Session: " << std::hex << sessionId << '\n';
+	std::string sessionId = ClientSessionManager::sessionIdToString(sessionData.m_sessionId.get());
+	std::cout << "Stored Session: \"" << sessionData.m_userId << "\" with ID: \"" << sessionId << "\"\n";
+	sessions.emplace(sessionId, sessionData);
 }
 
-bool authentiacateSession()
+void deleteSession(ClientSessionManager::key_type sessionId)
 {
-	return true;
+	std::cout << "Delete Session: " << ClientSessionManager::sessionIdToString(sessionId) << '\n';
 }
 
-void retrieveSession(uint8_t* sessionId)
+ClientSession retrieveSession(ClientSessionManager::key_type sessionId)
 {
-	std::cout << "retrieveSession\n";
+	ClientSession& thisSession = sessions.at(ClientSessionManager::sessionIdToString(sessionId));
+	return thisSession;
 }
