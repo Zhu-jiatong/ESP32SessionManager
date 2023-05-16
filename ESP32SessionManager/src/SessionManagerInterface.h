@@ -3,7 +3,24 @@
 #include <chrono>
 #include <functional>
 
-template<typename SessionType, typename KeyType>
+template<typename KeyType>
+class Session
+{
+public:
+	using key_type = KeyType;
+
+	Session(const char* userId, uint32_t clientIP) :
+		m_userId(userId),
+		m_clientIP(clientIP),
+		m_lastActiveTimestamp(std::chrono::high_resolution_clock::now()) {};
+
+	const char* m_userId;
+	uint32_t m_clientIP;
+	std::chrono::time_point<std::chrono::high_resolution_clock> m_lastActiveTimestamp;
+
+};
+
+template<typename SessionType, typename KeyType = typename SessionType::key_type>
 class SessionManager
 {
 public:
@@ -26,26 +43,8 @@ public:
 	virtual void updateSessions() = 0;
 	virtual session_type getSessionInformation(key_type) = 0;
 
-	class Session;
-
 protected:
 	std::function<void(session_type)> m_fn_storeSession;
 	std::function<void(key_type)> m_fn_deleteSession;
 	std::function<session_type(key_type)> m_fn_retrieveSession;
-};
-
-template<typename SessionType, typename KeyType>
-class SessionManager<SessionType, KeyType>::Session
-{
-public:
-	using key_type = KeyType;
-
-	Session(const char* userId, uint32_t clientIP) :
-		m_userId(userId),
-		m_clientIP(clientIP),
-		m_lastActiveTimestamp(std::chrono::high_resolution_clock::now()) {};
-
-	const char* m_userId;
-	uint32_t m_clientIP;
-	std::chrono::time_point<std::chrono::high_resolution_clock> m_lastActiveTimestamp;
 };

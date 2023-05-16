@@ -14,19 +14,19 @@ void ClientSessionManager::updateSessions()
 {
 }
 
-void ClientSessionManager::createSession(ClientSession sessionData)
+void ClientSessionManager::createSession(session_type sessionData)
 {
 	std::shared_ptr<uint8_t[32]> sessionId = generateId(sessionData.m_clientIP);
 	sessionData.m_sessionId = sessionId;
 	m_fn_storeSession(sessionData);
 }
 
-void ClientSessionManager::terminateSession(ClientSession::key_type sessionId)
+void ClientSessionManager::terminateSession(key_type sessionId)
 {
 	m_fn_deleteSession(sessionId);
 }
 
-ClientSession ClientSessionManager::getSessionInformation(ClientSession::key_type sessionId)
+ClientSession ClientSessionManager::getSessionInformation(key_type sessionId)
 {
 	return m_fn_retrieveSession(sessionId);;
 }

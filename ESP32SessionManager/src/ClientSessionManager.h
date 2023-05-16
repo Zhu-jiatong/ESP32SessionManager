@@ -5,15 +5,15 @@
 #include <memory>
 
 class ClientSessionManager :
-	public SessionManager<ClientSession, ClientSession::key_type>
+	public SessionManager<ClientSession>
 {
 public:
 	using SessionManager::SessionManager;
 	void begin();
 	void updateSessions();
-	void createSession(ClientSession sessionData);
-	void terminateSession(ClientSession::key_type sessionId);
-	ClientSession getSessionInformation(ClientSession::key_type sessionId); // TODO: use `std::optional`
+	void createSession(session_type sessionData);
+	void terminateSession(key_type sessionId);
+	ClientSession getSessionInformation(key_type sessionId); // TODO: use `std::optional`
 
 	static std::string sessionIdToString(key_type sessionId);
 	static std::shared_ptr<uint8_t[32]> sessionIdToArray(std::string sessionIdString);
