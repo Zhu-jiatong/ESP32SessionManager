@@ -22,19 +22,19 @@ void ClientSessionManager<ClientSessionType>::createSession(session_type session
 {
 	std::shared_ptr<uint8_t[32]> sessionId = generateId(sessionData.m_clientIP);
 	sessionData.m_sessionId = sessionId;
-	SessionManager<ClientSessionType>::m_fn_storeSession(sessionData);
+	SessionManagerBase<ClientSessionType>::m_fn_storeSession(sessionData);
 }
 
 template<typename ClientSessionType>
 void ClientSessionManager<ClientSessionType>::terminateSession(key_type sessionId)
 {
-	SessionManager<ClientSessionType>::m_fn_deleteSession(sessionId);
+	SessionManagerBase<ClientSessionType>::m_fn_deleteSession(sessionId);
 }
 
 template<typename ClientSessionType>
 ClientSessionType ClientSessionManager<ClientSessionType>::getSessionInformation(key_type sessionId)
 {
-	return SessionManager<ClientSessionType>::m_fn_retrieveSession(sessionId);;
+	return SessionManagerBase<ClientSessionType>::m_fn_retrieveSession(sessionId);;
 }
 
 template<typename ClientSessionType>

@@ -21,13 +21,13 @@ public:
 };
 
 template<typename SessionType, typename KeyType = typename SessionType::key_type>
-class SessionManager
+class SessionManagerBase
 {
 public:
 	using session_type = SessionType;
 	using key_type = KeyType;
 
-	SessionManager(
+	SessionManagerBase(
 		std::function<void(session_type)> fn_storeSession,
 		std::function<void(key_type)> fn_deleteSession,
 		std::function<session_type(key_type)> fn_retrieveSession

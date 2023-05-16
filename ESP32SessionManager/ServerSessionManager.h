@@ -4,6 +4,6 @@
 #include "ServerSession.h"
 
 class ServerSessionManager :
-    private SessionManager<ServerSession, const char*>
+    private SessionManagerBase<ServerSession, const char*>
 {
 };

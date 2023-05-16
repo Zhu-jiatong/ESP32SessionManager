@@ -7,12 +7,12 @@
 
 template<typename ClientSessionType = ClientSession>
 class ClientSessionManager :
-	public SessionManager<ClientSessionType>
+	public SessionManagerBase<ClientSessionType>
 {
 public:
-	using SessionManager<ClientSessionType>::SessionManager;
-	using session_type = typename SessionManager<ClientSessionType>::session_type;
-	using key_type = typename SessionManager<ClientSessionType>::key_type;
+	using SessionManagerBase<ClientSessionType>::SessionManagerBase;
+	using session_type = typename SessionManagerBase<ClientSessionType>::session_type;
+	using key_type = typename SessionManagerBase<ClientSessionType>::key_type;
 
 	void begin();
 	void updateSessions();
